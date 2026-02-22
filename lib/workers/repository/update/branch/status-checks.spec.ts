@@ -1,13 +1,13 @@
-import { GlobalConfig } from '../../../../config/global';
-import { logger } from '../../../../logger';
-import type { ConfidenceConfig, StabilityConfig } from './status-checks';
+import type { RenovateConfig } from '~test/util.ts';
+import { partial, platform } from '~test/util.ts';
+import { GlobalConfig } from '../../../../config/global.ts';
+import { logger } from '../../../../logger/index.ts';
+import type { ConfidenceConfig, StabilityConfig } from './status-checks.ts';
 import {
   resolveBranchStatus,
   setConfidence,
   setStability,
-} from './status-checks';
-import { partial, platform } from '~test/util';
-import type { RenovateConfig } from '~test/util';
+} from './status-checks.ts';
 
 describe('workers/repository/update/branch/status-checks', () => {
   describe('setStability', () => {
@@ -58,6 +58,7 @@ describe('workers/repository/update/branch/status-checks', () => {
           minimumReleaseAge: null,
         }),
       });
+
       expect(logger.debug).toHaveBeenCalledWith(
         'Status check is null or an empty string, skipping status check addition.',
       );
@@ -72,6 +73,7 @@ describe('workers/repository/update/branch/status-checks', () => {
           minimumReleaseAge: '',
         }),
       });
+
       expect(logger.debug).toHaveBeenCalledWith(
         'Status check is null or an empty string, skipping status check addition.',
       );
@@ -84,6 +86,7 @@ describe('workers/repository/update/branch/status-checks', () => {
         ...config,
         statusCheckNames: undefined as never,
       });
+
       expect(logger.debug).toHaveBeenCalledWith(
         'Status check is null or an empty string, skipping status check addition.',
       );
@@ -94,6 +97,7 @@ describe('workers/repository/update/branch/status-checks', () => {
       GlobalConfig.set({ dryRun: 'full' });
       config.stabilityStatus = 'green';
       await setStability(config);
+
       expect(logger.info).toHaveBeenCalledWith(
         'DRY-RUN: Would update renovate/stability-days status check state to green',
       );
@@ -153,6 +157,7 @@ describe('workers/repository/update/branch/status-checks', () => {
           mergeConfidence: null,
         }),
       });
+
       expect(logger.debug).toHaveBeenCalledWith(
         'Status check is null or an empty string, skipping status check addition.',
       );
@@ -168,6 +173,7 @@ describe('workers/repository/update/branch/status-checks', () => {
           mergeConfidence: '',
         }),
       });
+
       expect(logger.debug).toHaveBeenCalledWith(
         'Status check is null or an empty string, skipping status check addition.',
       );
@@ -181,6 +187,7 @@ describe('workers/repository/update/branch/status-checks', () => {
         ...config,
         statusCheckNames: undefined as never,
       });
+
       expect(logger.debug).toHaveBeenCalledWith(
         'Status check is null or an empty string, skipping status check addition.',
       );
@@ -192,6 +199,7 @@ describe('workers/repository/update/branch/status-checks', () => {
       config.minimumConfidence = 'high';
       config.confidenceStatus = 'yellow';
       await setConfidence(config);
+
       expect(logger.info).toHaveBeenCalledWith(
         'DRY-RUN: Would update renovate/merge-confidence status check state to yellow',
       );
