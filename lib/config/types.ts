@@ -165,8 +165,14 @@ export interface RenovateSharedConfig {
 export interface GlobalInheritableConfig {
   bbUseDevelopmentBranch?: boolean;
   configFileNames?: string[];
+  onboarding?: boolean;
   onboardingAutoCloseAge?: number;
   onboardingBranch?: string;
+  onboardingCommitMessage?: string;
+  onboardingConfig?: RenovateConfig;
+  onboardingConfigFileName?: string;
+  onboardingNoDeps?: 'auto' | 'enabled' | 'disabled';
+  onboardingPrTitle?: string;
 }
 
 // Config options used only within the global worker
@@ -242,6 +248,7 @@ export interface RepoGlobalConfig extends GlobalInheritableConfig {
   localDir?: string;
   migratePresets?: Record<string, string>;
   platform?: PlatformId;
+  prCacheSyncMaxPages?: number;
   presetCachePersistence?: boolean;
   httpCacheTtlDays?: number;
   autodiscoverRepoSort?: RepoSortMethod;
@@ -272,10 +279,8 @@ export interface LegacyAdminConfig {
 
   onboarding?: boolean;
   onboardingBranch?: string;
-  onboardingCommitMessage?: string;
   onboardingNoDeps?: 'auto' | 'enabled' | 'disabled';
   onboardingRebaseCheckbox?: boolean;
-  onboardingPrTitle?: string;
   onboardingConfig?: RenovateConfig;
   onboardingConfigFileName?: string;
 
@@ -300,6 +305,7 @@ export interface PostUpgradeTasks {
   dataFileTemplate?: string;
   fileFilters?: string[];
   executionMode: ExecutionMode;
+  installTools?: Record<string, Record<never, never>>;
 }
 
 export type UpdateConfig<
@@ -570,6 +576,7 @@ export interface PackageRule
   matchPackageNames?: string[];
   matchRepositories?: string[];
   matchSourceUrls?: string[];
+  matchRegistryUrls?: string[];
   matchUpdateTypes?: UpdateType[];
   matchJsonata?: string[];
   overrideDatasource?: string;
@@ -808,4 +815,5 @@ export interface BumpVersionConfig {
 export interface ToolSettingsOptions {
   jvmMaxMemory?: number;
   jvmMemory?: number;
+  nodeMaxMemory?: number;
 }
